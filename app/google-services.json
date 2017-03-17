@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "226490050444",
+    "firebase_url": "https://hackathon-c7438.firebaseio.com",
+    "project_id": "hackathon-c7438",
+    "storage_bucket": "hackathon-c7438.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226490050444:android:0ccd7b5223e6c357",
+        "android_client_info": {
+          "package_name": "app.project.donate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226490050444-uiibhgpci3uaci6djrspr10m5q6cfvhl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.project.donate",
+            "certificate_hash": "a8612ea9d1b0e1f1cf1fe37f770ab537b91a7fc9"
+          }
+        },
+        {
+          "client_id": "226490050444-3vsg2hkar5hs44k19du84usmvidd7fsr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.project.donate",
+            "certificate_hash": "020ddbcb22e1e4b8d80d3fc5c6412f73b0eff2e6"
+          }
+        },
+        {
+          "client_id": "226490050444-rnjj6f7hckbi28vj3h15t5nu59cir11k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmSLX6GDD7VKie8gwZjFm3G3HoPnotbmE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226490050444-rnjj6f7hckbi28vj3h15t5nu59cir11k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226490050444:android:7216d8038a158f71",
+        "android_client_info": {
+          "package_name": "ngo.donate.project.app.donatengo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226490050444-5oflbrogjdkreda5iq4suclb51i7vft9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ngo.donate.project.app.donatengo",
+            "certificate_hash": "a8612ea9d1b0e1f1cf1fe37f770ab537b91a7fc9"
+          }
+        },
+        {
+          "client_id": "226490050444-rnjj6f7hckbi28vj3h15t5nu59cir11k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmSLX6GDD7VKie8gwZjFm3G3HoPnotbmE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226490050444-rnjj6f7hckbi28vj3h15t5nu59cir11k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
