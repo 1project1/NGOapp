@@ -52,6 +52,7 @@ public class MainUi extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //TODO HARSH
+
         FirebaseUser firebaseAuth=FirebaseAuth.getInstance().getCurrentUser();
         String Uid=firebaseAuth.getUid();
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference();
