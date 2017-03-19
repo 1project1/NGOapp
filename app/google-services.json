@@ -67,6 +67,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "226490050444-l5djlbn50g72r71e9lqs38hoss906l6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ngo.donate.project.app.donatengo",
+            "certificate_hash": "020ddbcb22e1e4b8d80d3fc5c6412f73b0eff2e6"
+          }
+        },
+        {
           "client_id": "226490050444-5oflbrogjdkreda5iq4suclb51i7vft9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

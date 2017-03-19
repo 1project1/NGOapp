@@ -6,4 +6,104 @@
 
     <string name="action_settings">Settings</string>
     <string name="status">status</string>
+
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_account">No Account Yet ? Create One</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="select_language">Select Language</string>
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
+    <string name="log_out">Log Out</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="loading">Loading</string>
+    <string name="name">Name</string>
+    <string name="or">OR</string>
+
+    <string name="item_message">Request Status</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Hindi</item>
+    </string-array>
+
+    <string name="title_activity_main_ui">MainUi</string>
+
+
+    <string-array name="title">
+        <item>Title 1</item>
+        <item>Title 2</item>
+        <item>Title 3</item>
+        <item>Title 4</item>
+        <item>Title 5</item>
+        <item>Title 6</item>
+        <item>Title 7</item>
+        <item>Title 7</item>
+    </string-array>
+
+    <string-array name="intro">
+        <item>Theodore Komnenos Doukas (died c. 1253) ruled Epirus and Thessaly from 1215 to 1230, and most of Macedonia and western Thrace as Emperor of Thessalonica from 1224 to 1230. He was also the power behind the rule of his two sons John and Demetrios over Thessalonica in 1237–46. The scion of a distinguished Byzantine aristocratic family, he was called to Epirus by his bastard half-brother Michael I Komnenos Doukas, who had founded an independent principality there after the Fourth Crusade. When Michael died in 1215, Theodore assumed governance and allied with Serbia, taking the Latin Kingdom of Thessalonica in 1224. He declared himself emperor, challenging the claims of the Nicaean emperor John III Vatatzes on the Byzantine imperial throne. In 1230 he amassed an army to besiege Constantinople, but diverted it to fight in Bulgaria, where he was defeated, blinded, and imprisoned for seven years. In 1237 he installed his older son John, and later Demetrios, as emperor in Thessalonica, remaining the de facto regent of the state. He was taken prisoner again in 1252 by Vatatzes and sent into exile in Nicaea, where he died the next year.</item>
+        <item>harsh is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+        <item>aman is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+        <item>arup is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+        <item>aakash is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+        <item>archit is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+        <item>aakash is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+        <item>aakash is a good boy.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</item>
+    </string-array>
+
+    <string-array name="link">
+        <item>http://www.google.com</item>
+        <item>http://www.yahooo.com</item>
+        <item>http://www.gmail.com</item>
+        <item>http://www.facebook.com</item>
+        <item>http://www.google.com</item>
+        <item>http://www.google.com</item>
+        <item>http://www.google.com</item>
+        <item>http://www.google.com</item>
+    </string-array>
+
+    <string name="group">
+        Every man is an artisan of his own fortune!!!
+    </string>
+    <string name="aakash">
+        Login\nAccount Settings
+    </string>
+    <string name="aman">
+        Layout Design\nGraphics Design
+    </string>
+    <string name="archit">
+        Development Credits\nFeedback\nAbout APP
+    </string>
+    <string name="arup">
+        Cart\nHistory
+    </string>
+    <string name="harsh">
+        Database\nInformation
+    </string>
+
+    <string name="aboutUs">
+        "Donation is nothing but an act of presenting something as a gift, grant, or contribution "
+        "to the deprived section of the society. JeeOne is an APP made to serve the purpose of "
+        "donation. It is an online platform which makes it easier for you to experience the joy of "
+        "giving. This APP helps people connect to the NGO's near their locality committed to "
+        "social cause. This platform allow people to donate any kind of item they wish to in a "
+        "well administered and transparent manner via the connected NGO's.\n\n A list of items are "
+        "there in the APP to indicate the type of item the person wants to donate. All the items "
+        "selected an given by people will be passed on to the people in need via the NGO's in a "
+        "well administered manner.\n\n You can also separately list the items(Food, Clothes, "
+        "Electronic Items etc.) and their conditions (Good, Moderate or Bad). Only the NGO "
+        "selected will get access to the information you share(i.e. about you and your donation "
+        "details). Once the NGO gets all the information, the donor will be contacted. \n\n You "
+        "will be informed on every step of processing of items to maintain integrity. The "
+        "shared information will be in the form of messages, images and short videos. The story of "
+        "your good deed will be shared on our social page as well and also by the NGO in their own "
+        "pages or magazines."
+    </string>
+
+    <string name="address">Address</string>
+    <string name="phone">Phone Number</string>
 </resources>

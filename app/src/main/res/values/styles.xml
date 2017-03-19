@@ -17,4 +17,27 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="Login" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/color_primary_login</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_login</item>
+        <item name="colorAccent">@color/color_primary_accent_login</item>
+    </style>
+
+    <style name="GoogleButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/button_drawablePadding</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:layout_marginBottom">@dimen/button_marginBottom</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:drawableLeft">@drawable/ic_googleg_color_24dp</item>
+        <item name="android:background">@drawable/button_background_google</item>
+        <item name="android:textColor">#757575</item>
+    </style>
+
 </resources>
