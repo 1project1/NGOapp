@@ -79,7 +79,7 @@
         Development Credits\nFeedback\nAbout APP
     </string>
     <string name="arup">
-        Cart\nHistory
+        Cart\nHistory\nNGO Locator Algorithm
     </string>
     <string name="harsh">
         Database\nInformation
@@ -106,4 +106,5 @@
 
     <string name="address">Address</string>
     <string name="phone">Phone Number</string>
+    <string name="permission_denied_contacts">Permission Denied By User</string>
 </resources>

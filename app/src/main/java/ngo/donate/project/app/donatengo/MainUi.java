@@ -1,5 +1,6 @@
 package ngo.donate.project.app.donatengo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -148,7 +149,7 @@ public class MainUi extends AppCompatActivity
         } else if (id == R.id.nav_dist) {
 
         } else if (id == R.id.nav_credits) {
-
+            startActivity(new Intent(this, CreditsUI.class));
         } else if (id == R.id.nav_nav_rate) {
 
         }

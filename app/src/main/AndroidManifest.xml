@@ -25,6 +25,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUp" />
+
+        <activity
+            android:name=".CreditsUI"
+            android:parentActivityName=".MainUi"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
     </application>
 
 </manifest>
