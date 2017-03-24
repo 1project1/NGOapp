@@ -51,6 +51,7 @@ public class MainUi extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
         //TODO HARSH
 
@@ -59,7 +60,7 @@ public class MainUi extends AppCompatActivity
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference();
         mRef.child("Ngos").child("NGO1").child("ngoUsers").child(Uid).child("Name").setValue("harsh");
 
-        final String use[]=new String[2];
+        final String use[]=new String[3];
         final int[] i = {0};
         mRef.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
