@@ -52,6 +52,7 @@ public class MainUi extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
         //TODO HARSH
 
@@ -60,7 +61,7 @@ public class MainUi extends AppCompatActivity
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference();
         mRef.child("Ngos").child("NGO1").child("ngoUsers").child(Uid).child("Name").setValue("harsh");
 
-        final String use[]=new String[2];
+        final String use[]=new String[3];
         final int[] i = {0};
         mRef.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,15 +150,7 @@ public class MainUi extends AppCompatActivity
 
         } else if (id == R.id.nav_dist) {
 
-        } else if (id == R.id.nav_feedback){
-
-            Uri uriUrl = Uri.parse("https://docs.google.com/forms/d/1yln_gJBWt7N-Mrk0z47MB-TIpRZ3PgOTE4H2iYblSGo/viewform?edit_requested=true");
-            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-            startActivity(launchBrowser);
-
-        } else if (id == R.id.nav_rate) {
-
-        } else if (id == R.id.nav_credits) {
+        }  else if (id == R.id.nav_credits) {
 
             startActivity(new Intent(this, CreditsUI.class));
 
