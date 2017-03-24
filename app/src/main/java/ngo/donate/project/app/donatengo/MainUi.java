@@ -1,6 +1,7 @@
 package ngo.donate.project.app.donatengo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -148,11 +149,20 @@ public class MainUi extends AppCompatActivity
 
         } else if (id == R.id.nav_dist) {
 
+        } else if (id == R.id.nav_feedback){
+
+            Uri uriUrl = Uri.parse("https://docs.google.com/forms/d/1yln_gJBWt7N-Mrk0z47MB-TIpRZ3PgOTE4H2iYblSGo/viewform?edit_requested=true");
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+
+        } else if (id == R.id.nav_rate) {
+
         } else if (id == R.id.nav_credits) {
+
             startActivity(new Intent(this, CreditsUI.class));
-        } else if (id == R.id.nav_nav_rate) {
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

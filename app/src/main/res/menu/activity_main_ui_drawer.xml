@@ -20,9 +20,13 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_nav_rate"
+                android:id="@+id/nav_rate"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Rate Us" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/feedback"
+                android:title="Feedback" />
             <item
                 android:id="@+id/nav_credits"
                 android:icon="@drawable/ic_menu_send"
