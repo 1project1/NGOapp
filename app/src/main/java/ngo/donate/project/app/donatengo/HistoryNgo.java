@@ -52,26 +52,24 @@ public class HistoryNgo extends AppCompatActivity {
         int id = 0;
         switch (title.toLowerCase()) {
             case "clothes":
-                id = R.mipmap.ic_launcher;
+                id = R.drawable.uniform;
                 break;
             case "utensils":
-                id = R.mipmap.ic_launcher;
+                id = R.drawable.fryingpan;
                 break;
             case "shoes":
-                id = R.mipmap.ic_launcher;
+                id = R.drawable.shoes;
                 break;
-            case "bags":
-                id = R.mipmap.ic_launcher;
-                break;
-            case "furniture":
-                id = R.mipmap.ic_launcher;
-                break;
-            case "bedsheets":
-                id = R.mipmap.ic_launcher;
+            case "books":
+                id = R.drawable.books;
                 break;
             case "toys":
-                id = R.mipmap.ic_launcher;
+                id = R.drawable.train;
                 break;
+            case "food":
+                id = R.drawable.food;
+                break;
+            default: id = R.mipmap.ic_launcher;
 
         }
         return id;
@@ -146,20 +144,25 @@ public class HistoryNgo extends AppCompatActivity {
 
                     //Toast.makeText(MainUi.this, ""+use[i[0]], Toast.LENGTH_LONG).show();
                     //++i[0];
-                    Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
+
+                    //Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
+
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey()).child("Donations_item_Details");
                     mmRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            //TODO get count particular user detail item
+                            Toast.makeText(HistoryNgo.this, ""+dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                 //Toast.makeText(MainUi.this, ""+postSnapshot.getKey(), Toast.LENGTH_LONG).show();
                                 for(DataSnapshot Snapshot:postSnapshot.getChildren()) {
+
                                     String t = (String) Snapshot.child("title").getValue();
                                     String m = (String) Snapshot.child("message").getValue();
                                     String ngo = (String) Snapshot.child("ngoLocation").getValue();
                                     String date = (String) Snapshot.child("date").getValue();
-                                    Toast.makeText(HistoryNgo.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(HistoryNgo.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
 
                                     historyItemList.add(new HistoryItemNgo(t,getThumbnailId(t),ngo,"Dummy Address",m,(Long)Snapshot.child("quantity").getValue()));
                                     adapter.notifyDataSetChanged();
