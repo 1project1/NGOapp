@@ -1,6 +1,7 @@
 package ngo.donate.project.app.donatengo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,16 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
-import ngo.donate.project.app.donatengo.controllers.HistoryItem;
-import ngo.donate.project.app.donatengo.controllers.HistoryItemAdapter;
-
 public class MainUi extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    HistoryItemAdapter adapter;
-    List<HistoryItem> historyItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +55,51 @@ public class MainUi extends AppCompatActivity
 
         //TODO HARSH
 
+        FirebaseUser firebaseAuth=FirebaseAuth.getInstance().getCurrentUser();
+        String Uid=firebaseAuth.getUid();
+        DatabaseReference mRef= FirebaseDatabase.getInstance().getReference();
+        mRef.child("Ngos").child("NGO1").child("ngoUsers").child(Uid).child("Name").setValue("harsh");
 
+        final String use[]=new String[2];
+        final int[] i = {0};
+        mRef.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                    //Toast.makeText(MainUi.this, "" + dataSnapshot1.getKey(), Toast.LENGTH_LONG).show();
+                    use[i[0]]=dataSnapshot1.getKey();
+
+                    Toast.makeText(MainUi.this, ""+use[i[0]], Toast.LENGTH_LONG).show();
+                    ++i[0];
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey()).child("Donations_item_Details");
+                    mmRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                //Toast.makeText(MainUi.this, ""+postSnapshot.getKey(), Toast.LENGTH_LONG).show();
+                                for(DataSnapshot Snapshot:postSnapshot.getChildren()) {
+                                    String t = (String) Snapshot.child("title").getValue();
+                                    String m = (String) Snapshot.child("message").getValue();
+                                    String ngo = (String) Snapshot.child("ngoLocation").getValue();
+                                    String date = (String) Snapshot.child("date").getValue();
+                                    Toast.makeText(MainUi.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
+                                }
+                            }}
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -109,20 +146,26 @@ public class MainUi extends AppCompatActivity
         if (id == R.id.nav_about_app) {
             // Handle the camera action
         } else if (id == R.id.nav_history) {
-            startActivity(new Intent(this, HistoryNgo.class));
+
         } else if (id == R.id.nav_dist) {
+
+        } else if (id == R.id.nav_feedback){
+
+            Uri uriUrl = Uri.parse("https://docs.google.com/forms/d/1yln_gJBWt7N-Mrk0z47MB-TIpRZ3PgOTE4H2iYblSGo/viewform?edit_requested=true");
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+
+        } else if (id == R.id.nav_rate) {
 
         } else if (id == R.id.nav_credits) {
 
-        } else if (id == R.id.nav_nav_rate) {
+            startActivity(new Intent(this, CreditsUI.class));
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
 }
