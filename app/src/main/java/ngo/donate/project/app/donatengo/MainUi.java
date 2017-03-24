@@ -150,15 +150,7 @@ public class MainUi extends AppCompatActivity
 
         } else if (id == R.id.nav_dist) {
 
-        } else if (id == R.id.nav_feedback){
-
-            Uri uriUrl = Uri.parse("https://docs.google.com/forms/d/1yln_gJBWt7N-Mrk0z47MB-TIpRZ3PgOTE4H2iYblSGo/viewform?edit_requested=true");
-            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-            startActivity(launchBrowser);
-
-        } else if (id == R.id.nav_rate) {
-
-        } else if (id == R.id.nav_credits) {
+        }  else if (id == R.id.nav_credits) {
 
             startActivity(new Intent(this, CreditsUI.class));
 
