@@ -57,6 +57,7 @@ public class MainUi extends AppCompatActivity
         usernameView.setAdapter(userDonationAdapter);
         getUserNames();
         userDonationAdapter.notifyDataSetChanged();
+
         //TODO HARSH
 
 
@@ -65,13 +66,15 @@ public class MainUi extends AppCompatActivity
     private void getUserNames() {
 
         String[] names = {"arup","aman","aakash","harsh","archit"};
+        String[] titles = {"books","shoes","toys","medicines","utensils","clothes","others"};
        for(int i = 0; i<25; i++){
-           AcceptItems it = new AcceptItems(names[i%5],"25-03-2017","pending","dummy Loc",true,i+5);
+           AcceptItems it = new AcceptItems(titles[i%7],"25-03-2017","pending","dummy Loc",true,i+5);
            userItems.add(it);
            UserDonationDetails x = new UserDonationDetails(names[i%5],"995, sector-37, faridabad",userItems);
            userDonationlist.add(x);
           }
         userDonationAdapter.notifyDataSetChanged();
+
 
     }
 
