@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,11 @@ public class HistoryNgo extends AppCompatActivity {
     HistoryItemAdapter adapter;
     List<HistoryItemNgo> historyItemList;
 
+    /*final String Name[][]=new String[2][10];
+    final int[] i = {0};
+    final int[] j = {0};
+       */
+    List<String> Name=new ArrayList<String>(){};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +123,7 @@ public class HistoryNgo extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             //abc();
             xyz();
+
             return null;
         }
 
@@ -135,6 +142,7 @@ public class HistoryNgo extends AppCompatActivity {
 
         //final String use[]=new String[2];
         //final int[] i = {0};
+
         mRef.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -146,26 +154,59 @@ public class HistoryNgo extends AppCompatActivity {
                     //++i[0];
 
                     //Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
-
+                    //TODO
+                    Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_LONG).show();
+                    //Name[i[0]++][j[0]++]=(String)dataSnapshot1.getKey();
+                    Name.add(dataSnapshot1.getKey());
+                    //Toast.makeText(HistoryNgo.this, "Name:"+Name.get(0), Toast.LENGTH_SHORT).show();
+                    //Name[i[0]][j[0]]=dataSnapshot1.getKey();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey()).child("Donations_item_Details");
                     mmRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+
                             //TODO get count particular user detail item
                             Toast.makeText(HistoryNgo.this, ""+dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+                            long a=dataSnapshot.getChildrenCount();
+                            String str=Long.toString(a);
+                            Name.add(str);
+                            //++j[0];
+                            //Name[i[0]][j[0]++]= String.valueOf(dataSnapshot.getChildren());
+
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                //Toast.makeText(MainUi.this, ""+postSnapshot.getKey(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(HistoryNgo.this, ""+postSnapshot.getKey(), Toast.LENGTH_LONG).show();
+                                //Name[i[0]][j[0]++]=(String)postSnapshot.getKey();
+                                Name.add(postSnapshot.getKey());
                                 for(DataSnapshot Snapshot:postSnapshot.getChildren()) {
 
+
+                                  //  Name[i[0]][j[0]++]=(String) Snapshot.child("title").getValue();
                                     String t = (String) Snapshot.child("title").getValue();
+                                    Name.add(t);
+                                    //Name[i[0]][j[0]++]=(String) Snapshot.child("message").getValue();
                                     String m = (String) Snapshot.child("message").getValue();
+                                    Name.add(m);
+                                    //  Name[i[0]][j[0]++]=(String) Snapshot.child("ngoLocation").getValue();
                                     String ngo = (String) Snapshot.child("ngoLocation").getValue();
+                                    Name.add(ngo);
+                                    //  Name[i[0]][j[0]++]=(String) Snapshot.child("date").getValue();
                                     String date = (String) Snapshot.child("date").getValue();
+                                    Name.add(date);
                                     //Toast.makeText(HistoryNgo.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
 
                                     historyItemList.add(new HistoryItemNgo(t,getThumbnailId(t),ngo,"Dummy Address",m,(Long)Snapshot.child("quantity").getValue()));
                                     adapter.notifyDataSetChanged();
+
+
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(0), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(1), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(2), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(3), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(4), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(5), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(6), Toast.LENGTH_SHORT).show();
+
 
                                 }
                             }}
@@ -176,6 +217,7 @@ public class HistoryNgo extends AppCompatActivity {
                         }
                     });
                 }
+
             }
 
             @Override
@@ -183,6 +225,7 @@ public class HistoryNgo extends AppCompatActivity {
 
             }
         });
+
     }
 
 }

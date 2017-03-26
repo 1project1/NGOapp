@@ -12,6 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +36,14 @@ public class MainUi extends AppCompatActivity
     UserDonationAdapter userDonationAdapter;
     List<UserDonationDetails> userDonationlist;
     List<AcceptItems> userItems;
+
+    List<String> endUserAddr=new ArrayList<String>(){};
+    List<String> endUseraPhone=new ArrayList<String>(){};
+    List<String> endUserId=new ArrayList<String>(){};
+    List<String> stringList=new ArrayList<String>(){};
+    DatabaseReference dref= FirebaseDatabase.getInstance().getReference();
+    FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+    String Uid=firebaseUser.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +84,78 @@ public class MainUi extends AppCompatActivity
 
         String[] names = {"arup","aman","aakash","harsh","archit"};
         String[] titles = {"books","shoes","toys","medicines","utensils","clothes","others"};
-       for(int i = 0; i<25; i++){
+       /*for(int i = 0; i<25; i++){
            AcceptItems it = new AcceptItems(titles[i%7],"25-03-2017","pending","dummy Loc",true,i+5);
            userItems.add(it);
            UserDonationDetails x = new UserDonationDetails(names[i%5],"995, sector-37, faridabad",userItems);
            userDonationlist.add(x);
           }
         userDonationAdapter.notifyDataSetChanged();
+        */
+        abc();
+
+    }
+    public void abc(){
+
+        userItems.clear();
+        userDonationlist.clear();
+        dref.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    Toast.makeText(MainUi.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
+                    endUserId.add(dataSnapshot1.getKey());
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey()).child("Donations_item_Details");
+                    mmRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Toast.makeText(MainUi.this, ""+dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
+                                Toast.makeText(MainUi.this, ""  + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainUi.this, ""+postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                                for(DataSnapshot Snapshot:postSnapshot.getChildren()) {
+                                    //  Name[i[0]][j[0]++]=(String) Snapshot.child("title").getValue();
+                                    String t = (String) Snapshot.child("title").getValue();
+                                    stringList.add(t);
+                                    //Name[i[0]][j[0]++]=(String) Snapshot.child("message").getValue();
+                                    String m = (String) Snapshot.child("message").getValue();
+                                    stringList.add(m);
+                                    //  Name[i[0]][j[0]++]=(String) Snapshot.child("ngoLocation").getValue();
+                                    String ngo = (String) Snapshot.child("ngoLocation").getValue();
+                                    stringList.add(ngo);
+                                    //  Name[i[0]][j[0]++]=(String) Snapshot.child("date").getValue();
+                                    String date = (String) Snapshot.child("date").getValue();
+                                    stringList.add(date);
+                                    //Toast.makeText(HistoryNgo.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
+                                    AcceptItems it = new AcceptItems(t,date,m,ngo,(Boolean)Snapshot.child("requestPending").getValue(),5);
+                                    userItems.add(it);
+                                }UserDonationDetails x = new UserDonationDetails("harsh","995, sector-37, faridabad",userItems);
+                                userDonationlist.add(x);
+                                userDonationAdapter.notifyDataSetChanged();
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
