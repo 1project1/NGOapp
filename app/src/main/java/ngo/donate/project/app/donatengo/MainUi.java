@@ -1,6 +1,7 @@
 package ngo.donate.project.app.donatengo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,10 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ngo.donate.project.app.donatengo.controllers.UserDonationAdapter;
 import ngo.donate.project.app.donatengo.model.AcceptItems;
 import ngo.donate.project.app.donatengo.model.UserDonationDetails;
@@ -37,13 +48,21 @@ public class MainUi extends AppCompatActivity
     List<UserDonationDetails> userDonationlist;
     List<AcceptItems> userItems;
 
-    List<String> endUserAddr=new ArrayList<String>(){};
-    List<String> endUseraPhone=new ArrayList<String>(){};
-    List<String> endUserId=new ArrayList<String>(){};
-    List<String> stringList=new ArrayList<String>(){};
-    DatabaseReference dref= FirebaseDatabase.getInstance().getReference();
-    FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-    String Uid=firebaseUser.getUid();
+    //Log out variables
+    private static final String LOGIN_FILE = "LogInFile";
+    private GoogleApiClient mGoogleApiClient;
+
+    List<String> endUserAddr = new ArrayList<String>() {
+    };
+    List<String> endUseraPhone = new ArrayList<String>() {
+    };
+    List<String> endUserId = new ArrayList<String>() {
+    };
+    List<String> stringList = new ArrayList<String>() {
+    };
+    DatabaseReference dref = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    String Uid = firebaseUser.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +71,8 @@ public class MainUi extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        //intialise google signIn var's
+        initGoogle();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -65,12 +85,12 @@ public class MainUi extends AppCompatActivity
         navigationView.setItemIconTintList(null);
 
 
-        usernameView = (RecyclerView)findViewById(R.id.usernameList);
+        usernameView = (RecyclerView) findViewById(R.id.usernameList);
         userDonationlist = new ArrayList<>();
         userItems = new ArrayList<>();
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         usernameView.setLayoutManager(lm);
-        userDonationAdapter = new UserDonationAdapter(this,userDonationlist);
+        userDonationAdapter = new UserDonationAdapter(this, userDonationlist);
         usernameView.setAdapter(userDonationAdapter);
         getUserNames();
         userDonationAdapter.notifyDataSetChanged();
@@ -82,8 +102,8 @@ public class MainUi extends AppCompatActivity
 
     private void getUserNames() {
 
-        String[] names = {"arup","aman","aakash","harsh","archit"};
-        String[] titles = {"books","shoes","toys","medicines","utensils","clothes","others"};
+        String[] names = {"arup", "aman", "aakash", "harsh", "archit"};
+        String[] titles = {"books", "shoes", "toys", "medicines", "utensils", "clothes", "others"};
        /*for(int i = 0; i<25; i++){
            AcceptItems it = new AcceptItems(titles[i%7],"25-03-2017","pending","dummy Loc",true,i+5);
            userItems.add(it);
@@ -95,15 +115,16 @@ public class MainUi extends AppCompatActivity
         abc();
 
     }
-    public void abc(){
+
+    public void abc() {
 
         userItems.clear();
         userDonationlist.clear();
         dref.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    Toast.makeText(MainUi.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Toast.makeText(MainUi.this, "" + dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
                     endUserId.add(dataSnapshot1.getKey());
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -111,14 +132,14 @@ public class MainUi extends AppCompatActivity
                     mmRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Toast.makeText(MainUi.this, ""+dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainUi.this, "" + dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
 
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
-                                Toast.makeText(MainUi.this, ""  + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-                                Toast.makeText(MainUi.this, ""+postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-                                for(DataSnapshot Snapshot:postSnapshot.getChildren()) {
+                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                                for (DataSnapshot Snapshot : postSnapshot.getChildren()) {
                                     //  Name[i[0]][j[0]++]=(String) Snapshot.child("title").getValue();
                                     String t = (String) Snapshot.child("title").getValue();
                                     stringList.add(t);
@@ -132,9 +153,10 @@ public class MainUi extends AppCompatActivity
                                     String date = (String) Snapshot.child("date").getValue();
                                     stringList.add(date);
                                     //Toast.makeText(HistoryNgo.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
-                                    AcceptItems it = new AcceptItems(t,date,m,ngo,(Boolean)Snapshot.child("requestPending").getValue(),5);
+                                    AcceptItems it = new AcceptItems(t, date, m, ngo, (Boolean) Snapshot.child("requestPending").getValue(), 5);
                                     userItems.add(it);
-                                }UserDonationDetails x = new UserDonationDetails("harsh","995, sector-37, faridabad",userItems);
+                                }
+                                UserDonationDetails x = new UserDonationDetails("harsh", "995, sector-37, faridabad", userItems);
                                 userDonationlist.add(x);
                                 userDonationAdapter.notifyDataSetChanged();
 
@@ -184,9 +206,32 @@ public class MainUi extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, AccountSettings.class));
             return true;
         }
+        if (id == R.id.action_logout) {
+            SharedPreferences logInPref = getSharedPreferences(LOGIN_FILE, 0);
+            SharedPreferences.Editor logInEditor = logInPref.edit();
+            logInEditor.clear().putBoolean("isLoggedIn", false).apply();
 
+            //firebase signOut
+            FirebaseAuth.getInstance().signOut();
+
+            //Google signOut
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            // [START_EXCLUDE]
+                            // aakash updateUI(false);
+                            // [END_EXCLUDE]
+                        }
+                    });
+
+            startActivity(new Intent(getApplicationContext(), LogIn.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -199,10 +244,10 @@ public class MainUi extends AppCompatActivity
         if (id == R.id.nav_about_app) {
             // Handle the camera action
         } else if (id == R.id.nav_history) {
-            startActivity(new Intent(this,HistoryNgo.class));
+            startActivity(new Intent(this, HistoryNgo.class));
         } else if (id == R.id.nav_dist) {
 
-        }  else if (id == R.id.nav_credits) {
+        } else if (id == R.id.nav_credits) {
 
             startActivity(new Intent(this, CreditsUI.class));
 
@@ -212,5 +257,34 @@ public class MainUi extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, null /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        //Setting Profile Picture and Name on Resume of Activity
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        ((TextView) hView.findViewById(R.id.display_name_drawer)).setText(user.getDisplayName());
+        Log.w("Image", "" + user.getPhotoUrl());
+
+        CircleImageView civ = (CircleImageView) hView.findViewById(R.id.profile_picture_drawer);
+        if (user.getPhotoUrl() != null)
+            Glide.with(this).load(user.getPhotoUrl()).into(civ);
     }
 }

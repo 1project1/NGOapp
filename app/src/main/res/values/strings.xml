@@ -107,4 +107,12 @@
     <string name="address">Address</string>
     <string name="phone">Phone Number</string>
     <string name="permission_denied_contacts">Permission Denied By User</string>
+    <string name="edit_your_name">Edit Your Name</string>
+    <string name="edit_your_email">Edit Your Email</string>
+    <string name="gallery">Gallery</string>
+    <string name="select_image_from">Select Image From</string>
+    <string name="camera">Camera</string>
+    <string name="edit_your_phone">Edit your Phone</string>
+    <string name="edit_your_address">Edit your address</string>
+    <string name="retry">Retry</string>
 </resources>
