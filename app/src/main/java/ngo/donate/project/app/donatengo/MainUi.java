@@ -1,5 +1,6 @@
 package ngo.donate.project.app.donatengo;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -41,13 +41,13 @@ import ngo.donate.project.app.donatengo.model.AcceptItems;
 import ngo.donate.project.app.donatengo.model.UserDonationDetails;
 
 public class MainUi extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, UserDonationAdapter.ItemClickCallBack {
 
     RecyclerView usernameView;
     UserDonationAdapter userDonationAdapter;
     List<UserDonationDetails> userDonationlist;
     List<AcceptItems> userItems;
-
+    List<UserDonationDetails> newDList = new ArrayList<UserDonationDetails>();
     //Log out variables
     private static final String LOGIN_FILE = "LogInFile";
     private GoogleApiClient mGoogleApiClient;
@@ -63,34 +63,29 @@ public class MainUi extends AppCompatActivity
     DatabaseReference dref = FirebaseDatabase.getInstance().getReference();
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     String Uid = firebaseUser.getUid();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_ui);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         //intialise google signIn var's
         initGoogle();
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
-
-
         usernameView = (RecyclerView) findViewById(R.id.usernameList);
         userDonationlist = new ArrayList<>();
         userItems = new ArrayList<>();
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         usernameView.setLayoutManager(lm);
         userDonationAdapter = new UserDonationAdapter(this, userDonationlist);
+        userDonationAdapter.setItemClickCallBack(this);
         usernameView.setAdapter(userDonationAdapter);
         getUserNames();
         userDonationAdapter.notifyDataSetChanged();
@@ -103,6 +98,7 @@ public class MainUi extends AppCompatActivity
     private void getUserNames() {
 
         String[] names = {"arup", "aman", "aakash", "harsh", "archit"};
+       String[] add = {"ar", "a", "h", "hsh", "ait"};
         String[] titles = {"books", "shoes", "toys", "medicines", "utensils", "clothes", "others"};
        /*for(int i = 0; i<25; i++){
            AcceptItems it = new AcceptItems(titles[i%7],"25-03-2017","pending","dummy Loc",true,i+5);
@@ -112,52 +108,96 @@ public class MainUi extends AppCompatActivity
           }
         userDonationAdapter.notifyDataSetChanged();
         */
+
+       /* Random r = new Random();
+       int j = 0;
+        while(j++ < 5){
+            userItems.clear();
+            userItems=new ArrayList<>();
+            for(int i = 1; i <= r.nextInt(6)+1; i++){
+                AcceptItems l = new AcceptItems(titles[r.nextInt(10)%7],"31-03-2017","pending","afasg",false,r.nextInt(16));
+                userItems.add(l);
+            }
+            String data = "";
+            List<AcceptItems> newList = new ArrayList<>();
+            for(AcceptItems x:userItems){
+                data+=  "\nTitle:" + x.getTitle() + "\nDate:" + x.getDate() + "\nMessage:" + x.getMessage() +
+                        "\nQuantity:" + x.getQuantity() +
+                        "NGO:" + x.getNgoLocaton()+"\n\n";
+                newList.add(x);
+            }
+
+            new AlertDialog.Builder(MainUi.this).setIcon(null)
+                    .setTitle("UserList")
+                    .setMessage(data)
+                    .setCancelable(true)
+                    .setPositiveButton("OKkie",null)
+                    .show();
+
+            UserDonationDetails d = new UserDonationDetails(names[r.nextInt(5)],add[r.nextInt(5)]);
+            d.setItemsList(newList);
+            userDonationlist.add(d);
+        }
+        userDonationAdapter.notifyDataSetChanged();*/
         abc();
 
     }
 
     public void abc() {
-
-        userItems.clear();
         userDonationlist.clear();
         dref.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Toast.makeText(MainUi.this, "" + dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainUi.this, "" + dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
                     endUserId.add(dataSnapshot1.getKey());
+
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey()).child("Donations_item_Details");
                     mmRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Toast.makeText(MainUi.this, "" + dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+                     //       Toast.makeText(MainUi.this, "" + dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
 
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-
-                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                                userItems.clear();
+                                List<AcceptItems> newList = new ArrayList<>();
+                                newList.clear();
+//
+//                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot Snapshot : postSnapshot.getChildren()) {
                                     //  Name[i[0]][j[0]++]=(String) Snapshot.child("title").getValue();
                                     String t = (String) Snapshot.child("title").getValue();
-                                    stringList.add(t);
+                                    //stringList.add(t);
                                     //Name[i[0]][j[0]++]=(String) Snapshot.child("message").getValue();
                                     String m = (String) Snapshot.child("message").getValue();
-                                    stringList.add(m);
+                                    //stringList.add(m);
                                     //  Name[i[0]][j[0]++]=(String) Snapshot.child("ngoLocation").getValue();
                                     String ngo = (String) Snapshot.child("ngoLocation").getValue();
-                                    stringList.add(ngo);
+                                   // stringList.add(ngo);
                                     //  Name[i[0]][j[0]++]=(String) Snapshot.child("date").getValue();
                                     String date = (String) Snapshot.child("date").getValue();
-                                    stringList.add(date);
+                                    //stringList.add(date);
                                     //Toast.makeText(HistoryNgo.this, ""+t+"\n"+m+"\n"+ngo+"\n"+date, Toast.LENGTH_LONG).show();
                                     AcceptItems it = new AcceptItems(t, date, m, ngo, (Boolean) Snapshot.child("requestPending").getValue(), 5);
                                     userItems.add(it);
                                 }
-                                UserDonationDetails x = new UserDonationDetails("harsh", "995, sector-37, faridabad", userItems);
-                                userDonationlist.add(x);
+
+                                for(AcceptItems x:userItems){
+                                    newList.add(x);
+                                }
+
+                                UserDonationDetails x = new UserDonationDetails("arup", "995, sector-37, faridabad");
+                                x.setItemsList(newList);
+                               // newList.clear();
+
+                                newDList.clear();
+                                newDList.addAll(userDonationlist);
+                                newDList.add(x);
+                                userDonationlist.clear();
+                                userDonationlist.addAll(newDList);
                                 userDonationAdapter.notifyDataSetChanged();
 
                             }
@@ -209,7 +249,10 @@ public class MainUi extends AppCompatActivity
             startActivity(new Intent(this, AccountSettings.class));
             return true;
         }
-        if (id == R.id.action_logout) {
+        if(id == R.id.action_refresh) {
+            abc();
+            userDonationAdapter.notifyDataSetChanged();
+        }if (id == R.id.action_logout) {
             SharedPreferences logInPref = getSharedPreferences(LOGIN_FILE, 0);
             SharedPreferences.Editor logInEditor = logInPref.edit();
             logInEditor.clear().putBoolean("isLoggedIn", false).apply();
@@ -286,5 +329,30 @@ public class MainUi extends AppCompatActivity
         CircleImageView civ = (CircleImageView) hView.findViewById(R.id.profile_picture_drawer);
         if (user.getPhotoUrl() != null)
             Glide.with(this).load(user.getPhotoUrl()).into(civ);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        UserDonationDetails d = userDonationlist.get(position);
+        String data = "User Name: " + d.getUser_name() + "\nUser Address:" + d.getAddress() + "\n\n";
+        List<AcceptItems> l = d.getItemsList();
+        for(AcceptItems x:l){
+            data+=  "\nTitle:" + x.getTitle() + "\nDate:" + x.getDate() + "\nMessage:" + x.getMessage() +
+                    "\nQuantity:" + x.getQuantity() +
+                    "NGO:" + x.getNgoLocaton()+"\n\n";
+        }
+
+        new AlertDialog.Builder(MainUi.this).setIcon(null)
+                .setTitle(d.getUser_name())
+                .setMessage(data)
+                .setCancelable(true)
+                .setPositiveButton("OK",null)
+                .show();
+
+    }
+
+    @Override
+    public void onSecondaryIconClick(int position) {
+
     }
 }

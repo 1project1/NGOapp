@@ -1,5 +1,6 @@
 package ngo.donate.project.app.donatengo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,15 +9,16 @@ import java.util.List;
 
 public class UserDonationDetails {
 
-    String user_name;
-    String address;
-    List<AcceptItems> itemsList;
+    public String user_name;
+    public String address;
+    public List<AcceptItems> itemsList;
 
-    public UserDonationDetails(String user_name, String address, List<AcceptItems> itemsList) {
+    public UserDonationDetails(String user_name, String address) {
         this.user_name = user_name;
         this.address = address;
-        this.itemsList = itemsList;
+
     }
+
 
     public String getUser_name() {
         return user_name;
@@ -38,7 +40,7 @@ public class UserDonationDetails {
         return itemsList;
     }
 
-    public void setItemsList(List<AcceptItems> itemsList) {
+    public void setItemsList(final List<AcceptItems> itemsList) {
         this.itemsList = itemsList;
     }
 }

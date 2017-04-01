@@ -11,4 +11,9 @@
         android:title="@string/log_out"
         android:orderInCategory="200"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_refresh"
+        android:title="refresh"
+        app:showAsAction="always"/>
 </menu>
