@@ -2,15 +2,16 @@ package ngo.donate.project.app.donatengo;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import ngo.donate.project.app.donatengo.controllers.HistoryItem;
 import ngo.donate.project.app.donatengo.controllers.HistoryItemAdapter;
 import ngo.donate.project.app.donatengo.model.HistoryItemNgo;
 
@@ -29,6 +29,7 @@ public class HistoryNgo extends AppCompatActivity {
     HistoryItemAdapter adapter;
     List<HistoryItemNgo> historyItemList;
 
+    ProgressBar pHistBar;
     /*final String Name[][]=new String[2][10];
     final int[] i = {0};
     final int[] j = {0};
@@ -42,13 +43,15 @@ public class HistoryNgo extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("History");
+        pHistBar = (ProgressBar)findViewById(R.id.pHistBar);
+        pHistBar.setVisibility(View.VISIBLE);
         hist = (RecyclerView) findViewById(R.id.hist);
         historyItemList = new ArrayList<>();
         adapter = new HistoryItemAdapter(this, historyItemList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         hist.setLayoutManager(layoutManager);
         hist.setAdapter(adapter);
-        new BackTask(this).execute();
+        xyz();
         adapter.notifyDataSetChanged();
 
 
@@ -122,7 +125,7 @@ public class HistoryNgo extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             //abc();
-            xyz();
+            //xyz();
 
             return null;
         }
@@ -167,7 +170,7 @@ public class HistoryNgo extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                             //TODO get count particular user detail item
-                            Toast.makeText(HistoryNgo.this, ""+dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(HistoryNgo.this, ""+dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
                             long a=dataSnapshot.getChildrenCount();
                             String str=Long.toString(a);
                             Name.add(str);
@@ -175,7 +178,7 @@ public class HistoryNgo extends AppCompatActivity {
                             //Name[i[0]][j[0]++]= String.valueOf(dataSnapshot.getChildren());
 
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                Toast.makeText(HistoryNgo.this, ""+postSnapshot.getKey(), Toast.LENGTH_LONG).show();
+                               // Toast.makeText(HistoryNgo.this, ""+postSnapshot.getKey(), Toast.LENGTH_LONG).show();
                                 //Name[i[0]][j[0]++]=(String)postSnapshot.getKey();
                                 Name.add(postSnapshot.getKey());
                                 for(DataSnapshot Snapshot:postSnapshot.getChildren()) {
@@ -197,16 +200,17 @@ public class HistoryNgo extends AppCompatActivity {
 
                                     historyItemList.add(new HistoryItemNgo(t,getThumbnailId(t),ngo,"Dummy Address",m,(Long)Snapshot.child("quantity").getValue()));
                                     adapter.notifyDataSetChanged();
+                                    if(!historyItemList.isEmpty())pHistBar.setVisibility(View.GONE);
+                                    else pHistBar.setVisibility(View.VISIBLE);
 
-
-                                    Toast.makeText(HistoryNgo.this, "Name:"+Name.get(0), Toast.LENGTH_SHORT).show();
+                                   /* Toast.makeText(HistoryNgo.this, "Name:"+Name.get(0), Toast.LENGTH_SHORT).show();
                                     Toast.makeText(HistoryNgo.this, "Name:"+Name.get(1), Toast.LENGTH_SHORT).show();
                                     Toast.makeText(HistoryNgo.this, "Name:"+Name.get(2), Toast.LENGTH_SHORT).show();
                                     Toast.makeText(HistoryNgo.this, "Name:"+Name.get(3), Toast.LENGTH_SHORT).show();
                                     Toast.makeText(HistoryNgo.this, "Name:"+Name.get(4), Toast.LENGTH_SHORT).show();
                                     Toast.makeText(HistoryNgo.this, "Name:"+Name.get(5), Toast.LENGTH_SHORT).show();
                                     Toast.makeText(HistoryNgo.this, "Name:"+Name.get(6), Toast.LENGTH_SHORT).show();
-
+*/
 
                                 }
                             }}

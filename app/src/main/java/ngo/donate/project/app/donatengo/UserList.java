@@ -41,6 +41,7 @@ public class UserList extends AppCompatActivity implements AcceptItemControllers
         load();
     }
 
+
     private void load() {
         userAcceptItems.clear();
         List<AcceptItems> i = userListItems.getItemsList();
@@ -51,7 +52,7 @@ public class UserList extends AppCompatActivity implements AcceptItemControllers
     @Override
     public void onSingleClick(int position) {
         String details = "Name: " + userListItems.getUser_name() + "\nAddress: " + userListItems.getAddress() +
-                "\nPhone: " + userListItems.getContact();
+                "\nPhone: " + userListItems.getContact() + "\nEmail: " + userListItems.getEmail();
 
 
         new AlertDialog.Builder(this).setIcon(null).setTitle("User Details")

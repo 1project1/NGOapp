@@ -1,6 +1,5 @@
 package ngo.donate.project.app.donatengo;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -44,6 +43,7 @@ import ngo.donate.project.app.donatengo.model.UserDonationDetails;
 public class MainUi extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UserDonationAdapter.ItemClickCallBack {
 
+    ProgressBar pBar;
     RecyclerView usernameView;
     UserDonationAdapter userDonationAdapter;
     List<UserDonationDetails> userDonationlist;
@@ -70,6 +70,8 @@ public class MainUi extends AppCompatActivity
         setContentView(R.layout.activity_main_ui);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        pBar = (ProgressBar)findViewById(R.id.pBar);
+        pBar.setVisibility(View.VISIBLE);
         //intialise google signIn var's
         initGoogle();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -192,8 +194,9 @@ public class MainUi extends AppCompatActivity
                                 String name= (String) dataSnapshot.child("User_details").child("name").getValue();
                                 String addr= (String) dataSnapshot.child("User_details").child("address").getValue();
                                 String phone=(String) dataSnapshot.child("User_details").child("phone").getValue();
-                                Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
-                                UserDonationDetails x = new UserDonationDetails(name,addr);
+                                // TODO get EMALL ...... Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
+                                //TODO taken Dummy Value Here
+                                UserDonationDetails x = new UserDonationDetails(name,addr,phone,"arup.professional@gmail.com");
                                 x.setItemsList(newList);
                                // newList.clear();
 
@@ -203,6 +206,8 @@ public class MainUi extends AppCompatActivity
                                 userDonationlist.clear();
                                 userDonationlist.addAll(newDList);
                                 userDonationAdapter.notifyDataSetChanged();
+                                if(!userDonationlist.isEmpty())pBar.setVisibility(View.GONE);
+                                else pBar.setVisibility(View.VISIBLE);
 
                             }
 
@@ -338,7 +343,7 @@ public class MainUi extends AppCompatActivity
     @Override
     public void onItemClick(int position) {
         UserDonationDetails d = userDonationlist.get(position);
-        String data = "User Name: " + d.getUser_name() + "\nUser Address:" + d.getAddress() + "\n\n";
+        /*String data = "User Name: " + d.getUser_name() + "\nUser Address:" + d.getAddress() + "\n"+"Contact: "+d.getContact();
         List<AcceptItems> l = d.getItemsList();
         for(AcceptItems x:l){
             data+=  "\nTitle:" + x.getTitle() + "\nDate:" + x.getDate() + "\nMessage:" + x.getMessage() +
@@ -352,7 +357,10 @@ public class MainUi extends AppCompatActivity
                 .setCancelable(true)
                 .setPositiveButton("OK",null)
                 .show();
-
+*/
+        Intent i = new Intent(this,UserList.class);
+        i.putExtra("donationList",d);
+        startActivity(i);
     }
 
     @Override

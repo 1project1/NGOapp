@@ -39,7 +39,8 @@
             android:name=".EditDetail"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".AccountSettings" />
-        <activity android:name=".UserList"></activity>
+        <activity android:name=".UserList"
+            android:parentActivityName=".MainUi"></activity>
     </application>
 
 </manifest>

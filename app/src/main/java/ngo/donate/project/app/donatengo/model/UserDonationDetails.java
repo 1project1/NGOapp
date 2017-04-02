@@ -14,13 +14,18 @@ public class UserDonationDetails implements Serializable {
     public String contact;
     public List<AcceptItems> itemsList;
 
-    public UserDonationDetails(String user_name, String address, String contact) {
+    String email;
+    public UserDonationDetails(String user_name, String address, String contact,String email) {
         this.user_name = user_name;
         this.address = address;
         this.contact = contact;
+        this.email = email;
 
     }
 
+    public String getEmail() {
+        return email;
+    }
 
     public String getUser_name() {
         return user_name;
