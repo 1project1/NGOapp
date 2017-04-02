@@ -108,9 +108,10 @@ public class EditDetail extends DialogActivity implements View.OnClickListener {
                 break;
             case "Email":
                 val = data.getText().toString();
-                if (val.isEmpty() || val.contentEquals(currentValue)) return;
+                if (val.isEmpty()) return;
 
                 showProgressDialog();
+                mref.child("Ngos").child("NGO1").child("ngoUsers").child(user.getUid()).child("ngoUser_details").child("email").setValue(val);
                 user.updateEmail(data.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

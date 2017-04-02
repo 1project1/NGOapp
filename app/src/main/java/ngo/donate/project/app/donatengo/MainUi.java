@@ -193,7 +193,8 @@ public class MainUi extends AppCompatActivity
                                 String name= (String) dataSnapshot.child("User_details").child("name").getValue();
                                 String addr= (String) dataSnapshot.child("User_details").child("address").getValue();
                                 String phone=(String) dataSnapshot.child("User_details").child("phone").getValue();
-                                Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
+                                String email=(String) dataSnapshot.child("User_details").child("email").getValue();
+                                Toast.makeText(MainUi.this, ""+phone+"\n"+email, Toast.LENGTH_SHORT).show();
                                 UserDonationDetails x = new UserDonationDetails(name,addr);
                                 x.setItemsList(newList);
                                // newList.clear();
