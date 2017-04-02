@@ -34,6 +34,16 @@
         <activity
             android:name=".CreditsUI"
             android:parentActivityName=".MainUi"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".RateUs"
+            android:parentActivityName=".MainUi"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RateTheme.Light.NoActionBar"/>
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditDetail"

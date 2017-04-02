@@ -115,4 +115,15 @@
     <string name="edit_your_phone">Edit your Phone</string>
     <string name="edit_your_address">Edit your address</string>
     <string name="retry">Retry</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="feedback">Feedback</string>
+    <string name="credits">Credits</string>
+    <string name="later">LATER</string>
+    <string name="rate">Rate</string>
+    <string name="rate_us_title">Please Rate the APP</string>
+    <string name="rate_us_toast_ask">Please give your Rating !!!</string>
+    <string name="rate_us_toast_thanks">Thank You !!!</string>
+    <string name="rate_dialog_question">Do you want to rate the APP again ?</string>
+    <string name="rate_dialog_yes">Yes</string>
+    <string name="rate_dialog_no">No</string>
 </resources>

@@ -20,13 +20,17 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_nav_rate"
+                android:id="@+id/nav_rate_us"
                 android:icon="@drawable/star"
-                android:title="Rate Us" />
+                android:title="@string/rate_us" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/feedback"
+                android:title="@string/feedback" />
             <item
                 android:id="@+id/nav_credits"
                 android:icon="@drawable/credits"
-                android:title="Credits" />
+                android:title="@string/credits" />
         </menu>
     </item>
 

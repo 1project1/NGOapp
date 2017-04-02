@@ -1,5 +1,6 @@
 package ngo.donate.project.app.donatengo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class MainUi extends AppCompatActivity
     ProgressBar pBar;
     RecyclerView usernameView;
     UserDonationAdapter userDonationAdapter;
+    static int rated;
     List<UserDonationDetails> userDonationlist;
     List<AcceptItems> userItems;
     List<UserDonationDetails> newDList = new ArrayList<UserDonationDetails>();
@@ -65,12 +68,29 @@ public class MainUi extends AppCompatActivity
     DatabaseReference dref = FirebaseDatabase.getInstance().getReference();
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     String Uid = firebaseUser.getUid();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_ui);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences preferences = getSharedPreferences("Progress", MODE_PRIVATE);
+        int appUsedCount = preferences.getInt("appUsedCount", 0);
+        appUsedCount++;
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("appUsedCount", appUsedCount);
+        editor.apply();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("RateProgress", MODE_PRIVATE);
+        rated = sharedPreferences.getInt("apprated", 0);
+
+        if (appUsedCount % 15 == 0 && appUsedCount <= 300 && rated == 0) {
+            startActivity(new Intent(this, RateUs.class));
+        }
+
         pBar = (ProgressBar)findViewById(R.id.pBar);
         pBar.setVisibility(View.VISIBLE);
         //intialise google signIn var's
@@ -302,10 +322,36 @@ public class MainUi extends AppCompatActivity
             startActivity(new Intent(this, HistoryNgo.class));
         } else if (id == R.id.nav_dist) {
 
+        } else if (id == R.id.nav_rate_us){
+            SharedPreferences sharedPreferences = getSharedPreferences("RateProgress", MODE_PRIVATE);
+            rated = sharedPreferences.getInt("apprated", 0);
+
+            if(rated == 1) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainUi.this);
+                builder.setCancelable(false);
+                builder.setMessage(R.string.rate_dialog_question);
+                builder.setPositiveButton(R.string.rate_dialog_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        startActivity(new Intent(MainUi.this, RateUs.class));
+                    }
+                });
+                builder.setNegativeButton(R.string.rate_dialog_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } else if (rated == 0){
+                startActivity(new Intent(this, RateUs.class));
+            }
+        } else if (id == R.id.nav_feedback){
+
         } else if (id == R.id.nav_credits) {
-
             startActivity(new Intent(this, CreditsUI.class));
-
         }
 
 
