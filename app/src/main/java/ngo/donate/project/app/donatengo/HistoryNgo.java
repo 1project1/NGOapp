@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -158,7 +157,7 @@ public class HistoryNgo extends AppCompatActivity {
 
                     //Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
                     //TODO
-                    Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(HistoryNgo.this, ""+dataSnapshot1.getKey(), Toast.LENGTH_LONG).show();
                     //Name[i[0]++][j[0]++]=(String)dataSnapshot1.getKey();
                     Name.add(dataSnapshot1.getKey());
                     //Toast.makeText(HistoryNgo.this, "Name:"+Name.get(0), Toast.LENGTH_SHORT).show();
