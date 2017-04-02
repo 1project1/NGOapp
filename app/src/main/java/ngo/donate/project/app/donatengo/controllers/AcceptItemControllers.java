@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,13 +22,13 @@ import ngo.donate.project.app.donatengo.model.UserDonationDetails;
 
 public class AcceptItemControllers extends RecyclerView.Adapter<AcceptItemControllers.UserItemVH> {
 
-    List<UserDonationDetails> itemList;
+    List<AcceptItems> itemList;
     AcceptItems a;
     UserDonationDetails d;
     Context c;
     ItemClickListener listener;
 
-    public AcceptItemControllers(Context c, List<UserDonationDetails> itemList) {
+    public AcceptItemControllers(Context c, List<AcceptItems> itemList) {
         this.itemList = itemList;
         this.c = c;
     }
@@ -40,27 +41,56 @@ public class AcceptItemControllers extends RecyclerView.Adapter<AcceptItemContro
 
     @Override
     public void onBindViewHolder(UserItemVH holder, int position) {
-        d = itemList.get(position);
+        a = itemList.get(position);
 
-        holder.itemTitle.setText("");
+        holder.itemTitle.setText(a.getTitle());
+        holder.itemDate.setText("Date: " + a.getDate());
+        holder.itemQuantity.setText("Quantity:"+ a.getQuantity());
+        holder.itemRequestStatus.setText("Request Status: " + a.getMessage());
+        holder.itemIcon.setImageResource(mapIcon(a.getTitle()));
+        holder.ngoLocation.setText("Ngo Location: " + a.getNgoLocaton());
+
+    }
+
+    private int mapIcon(String title) {
+        int id;
+        switch (title.toLowerCase()){
+            case "food":
+                id = R.drawable.food;
+                break;
+            case "books":
+                id = R.drawable.books;break;
+            case "toys":
+                id = R.drawable.train;break;
+            case "utensils":
+                id = R.drawable.fryingpan;break;
+            case "shoes":
+                id = R.drawable.shoes;
+                break;
+            default:
+                id = R.mipmap.dummy;
+
+        }
+        return id;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return itemList.size();
     }
 
     public interface ItemClickListener {
-        public void onSingleClick(int position);
+         void onSingleClick(int position);
 
-        public void onLongClick(int position);
+         void onLongClick(int position);
     }
 
-    public class UserItemVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class UserItemVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView itemTitle, itemQuantity, itemDate, itemRequestStatus, ngoLocation;
         ImageView itemIcon;
         CheckBox selectedItem;
+        RelativeLayout parentView;
 
         public UserItemVH(View itemView) {
             super(itemView);
@@ -71,15 +101,38 @@ public class AcceptItemControllers extends RecyclerView.Adapter<AcceptItemContro
             ngoLocation = (TextView) itemView.findViewById(R.id.itemNgoLocation);
             itemIcon = (ImageView)itemView.findViewById(R.id.itemIcon);
             selectedItem = (CheckBox)itemView.findViewById(R.id.selectItem);
+            parentView = (RelativeLayout)itemView.findViewById(R.id.parentView);
+            parentView.setOnClickListener(this);
+            parentView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (view.getId() == R.id.parentView)
+              if(view.getId() == R.id.selectItem){
+                  if(selectedItem.isChecked())
+                      selectedItem.setChecked(false);
+                  else
+                      selectedItem.setChecked(true);
+
+            }
+            else if (view.getId() == R.id.parentView && selectedItem.getVisibility() == View.INVISIBLE)
             {
-                listener.onLongClick(getAdapterPosition());
                 listener.onSingleClick(getAdapterPosition());
             }
+
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            listener.onSingleClick(getAdapterPosition());
+            selectedItem.setVisibility(View.VISIBLE);
+            selectedItem.setChecked(true);
+
+            for(AcceptItems x : itemList){
+
+                x.setCheckedAndVisib(selectedItem);
+            }
+            return true;
         }
     }
 

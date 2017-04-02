@@ -1,10 +1,15 @@
 package ngo.donate.project.app.donatengo.model;
 
+import android.view.View;
+import android.widget.CheckBox;
+
+import java.io.Serializable;
+
 /**
  * Created by ArupPc on 25-03-2017.
  */
 
-public class AcceptItems {
+public class AcceptItems implements Serializable {
 
     String title;
     String date;
@@ -68,5 +73,11 @@ public class AcceptItems {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public void setCheckedAndVisib(CheckBox c) {
+
+        c.setVisibility(View.VISIBLE);
+
     }
 }

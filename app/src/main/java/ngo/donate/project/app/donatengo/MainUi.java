@@ -1,6 +1,5 @@
 package ngo.donate.project.app.donatengo;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -49,6 +48,7 @@ public class MainUi extends AppCompatActivity
     List<UserDonationDetails> userDonationlist;
     List<AcceptItems> userItems;
     List<UserDonationDetails> newDList = new ArrayList<UserDonationDetails>();
+    ProgressBar pBar;
     //Log out variables
     private static final String LOGIN_FILE = "LogInFile";
     private GoogleApiClient mGoogleApiClient;
@@ -72,6 +72,8 @@ public class MainUi extends AppCompatActivity
         setSupportActionBar(toolbar);
         //intialise google signIn var's
         initGoogle();
+        pBar = (ProgressBar)findViewById(R.id.pBar);
+        pBar.setVisibility(View.VISIBLE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,6 +91,7 @@ public class MainUi extends AppCompatActivity
         userDonationAdapter.setItemClickCallBack(this);
         usernameView.setAdapter(userDonationAdapter);
         getUserNames();
+        //setupProg();
         userDonationAdapter.notifyDataSetChanged();
 
         //TODO HARSH
@@ -145,8 +148,10 @@ public class MainUi extends AppCompatActivity
     }
 
     public void abc() {
+
         userDonationAdapter.notifyDataSetChanged();
         userDonationlist.clear();
+
         dref.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -193,8 +198,8 @@ public class MainUi extends AppCompatActivity
                                 String name= (String) dataSnapshot.child("User_details").child("name").getValue();
                                 String addr= (String) dataSnapshot.child("User_details").child("address").getValue();
                                 String phone=(String) dataSnapshot.child("User_details").child("phone").getValue();
-                                Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
-                                UserDonationDetails x = new UserDonationDetails(name,addr);
+                                //Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
+                                UserDonationDetails x = new UserDonationDetails(name,addr,phone);
                                 x.setItemsList(newList);
                                // newList.clear();
 
@@ -204,6 +209,8 @@ public class MainUi extends AppCompatActivity
                                 userDonationlist.clear();
                                 userDonationlist.addAll(newDList);
                                 userDonationAdapter.notifyDataSetChanged();
+                                if(!userDonationlist.isEmpty())pBar.setVisibility(View.GONE);
+
 
                             }
 
@@ -339,7 +346,7 @@ public class MainUi extends AppCompatActivity
     @Override
     public void onItemClick(int position) {
         UserDonationDetails d = userDonationlist.get(position);
-        String data = "User Name: " + d.getUser_name() + "\nUser Address:" + d.getAddress() + "\n\n";
+        /*String data = "User Name: " + d.getUser_name() + "\nUser Address:" + d.getAddress() + "\n\n";
         List<AcceptItems> l = d.getItemsList();
         for(AcceptItems x:l){
             data+=  "\nTitle:" + x.getTitle() + "\nDate:" + x.getDate() + "\nMessage:" + x.getMessage() +
@@ -353,11 +360,34 @@ public class MainUi extends AppCompatActivity
                 .setCancelable(true)
                 .setPositiveButton("OK",null)
                 .show();
-
+*/
+        Intent i = new Intent(this,UserList.class);
+        i.putExtra("donationList", d);
+        startActivity(i);
     }
 
     @Override
     public void onSecondaryIconClick(int position) {
 
     }
+
+    private void setupProg(){
+        pBar.setVisibility(View.VISIBLE);
+        userDonationAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                pBar.setVisibility(View.GONE);
+                userDonationAdapter.unregisterAdapterDataObserver(this);
+            }
+
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                pBar.setVisibility(View.GONE);
+                userDonationAdapter.unregisterAdapterDataObserver(this);
+            }
+        });
+    }
+
 }
