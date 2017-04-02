@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -155,18 +156,18 @@ public class MainUi extends AppCompatActivity
 
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey()).child("Donations_item_Details");
+                    DatabaseReference mmRef = database.getReference("endUsers").child(dataSnapshot1.getKey());
                     mmRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                     //       Toast.makeText(MainUi.this, "" + dataSnapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+                           //Toast.makeText(MainUi.this, "" + dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
 
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            for (DataSnapshot postSnapshot : dataSnapshot.child("Donations_item_Details").getChildren()) {
                                 userItems.clear();
                                 List<AcceptItems> newList = new ArrayList<>();
                                 newList.clear();
-//
-//                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+//                                   Todo get keys here
+                                    //Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
 //                                Toast.makeText(MainUi.this, "" + postSnapshot.getKey(), Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot Snapshot : postSnapshot.getChildren()) {
                                     //  Name[i[0]][j[0]++]=(String) Snapshot.child("title").getValue();
@@ -189,8 +190,11 @@ public class MainUi extends AppCompatActivity
                                 for(AcceptItems x:userItems){
                                     newList.add(x);
                                 }
-
-                                UserDonationDetails x = new UserDonationDetails("arup", "995, sector-37, faridabad");
+                                String name= (String) dataSnapshot.child("User_details").child("name").getValue();
+                                String addr= (String) dataSnapshot.child("User_details").child("address").getValue();
+                                String phone=(String) dataSnapshot.child("User_details").child("phone").getValue();
+                                Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
+                                UserDonationDetails x = new UserDonationDetails(name,addr);
                                 x.setItemsList(newList);
                                // newList.clear();
 
