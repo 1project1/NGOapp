@@ -114,8 +114,8 @@ public class AccountSettings extends DialogActivity implements View.OnTouchListe
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        address.setText((String) dataSnapshot.child("endUsers").child(user.getUid()).child("User_details").child("address").getValue());
-                        phone.setText((String) dataSnapshot.child("endUsers").child(user.getUid()).child("User_details").child("phone").getValue());
+                        address.setText((String) dataSnapshot.child("Ngos").child("NGO1").child("ngoUsers").child(user.getUid()).child("ngoUser_details").child("address").getValue());
+                        phone.setText((String) dataSnapshot.child("Ngos").child("NGO1").child("ngoUsers").child(user.getUid()).child("ngoUser_details").child("phone").getValue());
                         hideProgressDialog();
                     }
 

@@ -138,7 +138,7 @@ public class HistoryNgo extends AppCompatActivity {
         FirebaseUser firebaseAuth=FirebaseAuth.getInstance().getCurrentUser();
         String Uid=firebaseAuth.getUid();
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference();
-        mRef.child("Ngos").child("NGO1").child("ngoUsers").child(Uid).child("Name").setValue("harsh");
+        //mRef.child("Ngos").child("NGO1").child("ngoUsers").child(Uid).child("Name").setValue("harsh");
 
         //final String use[]=new String[2];
         //final int[] i = {0};

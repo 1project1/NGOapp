@@ -93,6 +93,7 @@ public class EditDetail extends DialogActivity implements View.OnClickListener {
                         .setDisplayName(val)
                         .build();
                 showProgressDialog();
+                mref.child("Ngos").child("NGO1").child("ngoUsers").child(user.getUid()).child("ngoUser_details").child("name").setValue(val);
                 user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -143,7 +144,7 @@ public class EditDetail extends DialogActivity implements View.OnClickListener {
                 val = data.getText().toString();
                 if (val.isEmpty() || val.contentEquals(currentValue)) return;
                 else
-                    mref.child("endUsers").child(user.getUid()).child("User_details").child("address").setValue(val).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mref.child("Ngos").child("NGO1").child("ngoUsers").child(user.getUid()).child("ngoUser_details").child("address").setValue(val).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
@@ -159,7 +160,7 @@ public class EditDetail extends DialogActivity implements View.OnClickListener {
                 val = data.getText().toString();
                 if (val.isEmpty() || val.contentEquals(currentValue)) return;
                 else
-                    mref.child("endUsers").child(user.getUid()).child("User_details").child("phone").setValue(val).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mref.child("Ngos").child("NGO1").child("ngoUsers").child(user.getUid()).child("ngoUser_details").child("phone").setValue(val).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
