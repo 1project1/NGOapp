@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -194,9 +195,11 @@ public class MainUi extends AppCompatActivity
                                 String name= (String) dataSnapshot.child("User_details").child("name").getValue();
                                 String addr= (String) dataSnapshot.child("User_details").child("address").getValue();
                                 String phone=(String) dataSnapshot.child("User_details").child("phone").getValue();
+                                String email=(String) dataSnapshot.child("User_details").child("email").getValue();
                                 // TODO get EMALL ...... Toast.makeText(MainUi.this, ""+phone, Toast.LENGTH_SHORT).show();
                                 //TODO taken Dummy Value Here
-                                UserDonationDetails x = new UserDonationDetails(name,addr,phone,"arup.professional@gmail.com");
+                                //Toast.makeText(MainUi.this, ""+email, Toast.LENGTH_SHORT).show();
+                                UserDonationDetails x = new UserDonationDetails(name,addr,phone,email);
                                 x.setItemsList(newList);
                                // newList.clear();
 
