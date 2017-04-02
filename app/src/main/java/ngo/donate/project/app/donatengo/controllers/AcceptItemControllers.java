@@ -55,7 +55,7 @@ public class AcceptItemControllers extends RecyclerView.Adapter<AcceptItemContro
     private int mapIcon(String title) {
         int id;
         switch (title.toLowerCase()){
-            case "food":
+            case "others":
                 id = R.drawable.food;
                 break;
             case "books":

@@ -7,4 +7,7 @@
     <color name="color_primary_login">#212121</color>
     <color name="color_primary_dark_login">#303030</color>
     <color name="color_primary_accent_login">#29B6F6</color>
+
+    <color name="cancelList">#D50000</color>
+    <color name="confirmList">#2196F3</color>
 </resources>

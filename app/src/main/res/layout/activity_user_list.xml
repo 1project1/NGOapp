@@ -12,9 +12,42 @@
         android:id="@+id/userListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadeScrollbars="true">
-
+        android:fadeScrollbars="true"
+        android:layout_above="@+id/selectButtons">
 
     </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/selectButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:weightSum="100"
+        android:background="#00000000"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/listCancelled"
+            android:layout_width="wrap_content"
+            android:background="@color/cancelList"
+            android:textColor="#fff"
+            android:onClick="performCancelAction"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Cancel Items"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="#6c6060"/>
+        <Button
+            android:id="@+id/listConfirmed"
+            android:layout_width="wrap_content"
+            android:textColor="#fff"
+
+            android:onClick="performAction"
+            android:background="@color/confirmList"
+            android:layout_height="wrap_content" android:layout_weight="50"
+            android:text="Confirm Items"/>
+    </LinearLayout>
 
 </RelativeLayout>
