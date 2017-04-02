@@ -75,7 +75,7 @@ public class UserDonationAdapter extends RecyclerView.Adapter<UserDonationAdapte
     }
 
 
-    public interface ItemClickCallBack{
+     public interface ItemClickCallBack{
         void onItemClick(int position);
         void onSecondaryIconClick(int position);
 

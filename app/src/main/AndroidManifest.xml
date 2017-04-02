@@ -21,7 +21,6 @@
             android:name=".LogIn"
             android:screenOrientation="portrait"
             android:theme="@style/Login" />
-
         <activity
             android:name=".model.Splash"
             android:screenOrientation="portrait">
@@ -32,16 +31,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUp" />
-
         <activity
             android:name=".CreditsUI"
             android:parentActivityName=".MainUi"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditDetail"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".AccountSettings" />
+        <activity android:name=".UserList"></activity>
     </application>
 
 </manifest>

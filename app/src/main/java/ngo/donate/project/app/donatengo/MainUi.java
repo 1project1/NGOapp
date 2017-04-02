@@ -144,6 +144,7 @@ public class MainUi extends AppCompatActivity
     }
 
     public void abc() {
+        userDonationAdapter.notifyDataSetChanged();
         userDonationlist.clear();
         dref.child("Ngos").child("NGO1").child("endUsers").addValueEventListener(new ValueEventListener() {
             @Override
